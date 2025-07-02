@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head><title>Clientes</title></head>
-<link rel="stylesheet" href="/styles.css">
-<body>
-  <h1>Clientes</h1>
-  <form method="POST" action="/clientes">
-    <input name="cedula" placeholder="Cédula" required>
-    <input name="nombre" placeholder="Nombre" required>
-    <input name="apellido" placeholder="Apellido" required>
-    <input name="telefono" placeholder="Teléfono" required>
-    <select name="estado_civil" required>
-      <option value="">Estado civil</option>
-      <option>Soltero</option>
-      <option>Casado</option>
-      <option>Divorciado</option>
-    </select>
-    <button>Guardar</button>
-  </form>
+  <head>
+    <title>Clientes</title>
+  </head>
+  <link rel="stylesheet" href="/styles.css" />
+  <body>
+    <h1>Aplicación Web AWS Node.js Express</h1>
+    <h1>Clientes</h1>
+    <form method="POST" action="/clientes">
+      <input name="cedula" placeholder="Cédula" required />
+      <input name="nombre" placeholder="Nombre" required />
+      <input name="apellido" placeholder="Apellido" required />
+      <input name="telefono" placeholder="Teléfono" required />
+      <select name="estado_civil" required>
+        <option value="">Estado civil</option>
+        <option>Soltero</option>
+        <option>Casado</option>
+        <option>Divorciado</option>
+      </select>
+      <button>Guardar</button>
+    </form>
 
-  <table border="1">
-    <tr>
-      <th>Cédula</th><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>Estado Civil</th><th>Acciones</th>
-    </tr>
-    <% clientes.forEach(c => { %>
+    <table border="1">
+      <tr>
+        <th>Cédula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Teléfono</th>
+        <th>Estado Civil</th>
+        <th>Acciones</th>
+      </tr>
+      <% clientes.forEach(c => { %>
       <tr>
         <td><%= c.cedula %></td>
         <td><%= c.nombre %></td>
@@ -31,12 +39,16 @@
         <td><%= c.estado_civil %></td>
         <td>
           <a href="/clientes/<%= c.cedula %>/edit">Editar</a>
-          <form method="POST" action="/clientes/<%= c.cedula %>?_method=DELETE" style="display:inline;">
+          <form
+            method="POST"
+            action="/clientes/<%= c.cedula %>?_method=DELETE"
+            style="display: inline"
+          >
             <button type="submit">Eliminar</button>
           </form>
         </td>
       </tr>
-    <% }) %>
-  </table>
-</body>
+      <% }) %>
+    </table>
+  </body>
 </html>
