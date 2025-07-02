@@ -3,58 +3,43 @@ const router = express.Router();
 
 let clientes = [];
 
-
-//cr4ear
-router.post('', (req, res) => {
+// Crear nuevo cliente
+router.post('/', (req, res) => {
   const cliente = req.body;
   clientes.push(cliente);
-  res.status(201).json(cliente);
+  res.redirect('/clientes/vista');
 });
 
-//listar 
+// Listar como JSON
 router.get('/', (_req, res) => {
   res.json(clientes);
 });
 
+// Mostrar vista principal con EJS
+router.get('/vista', (_req, res) => {
+  res.render('index', { clientes });
+});
 
- //ediatar
- 
+// Mostrar formulario para editar
+router.get('/:cedula/edit', (req, res) => {
+  const cliente = clientes.find(c => c.cedula === req.params.cedula);
+  res.render('edit', { cliente });
+});
+
+// Actualizar cliente
 router.put('/:cedula', (req, res) => {
   const { cedula } = req.params;
   const idx = clientes.findIndex(c => c.cedula === cedula);
-
-  if (idx === -1) return res.status(400).json({ error: 'Cliente no encontrado' });
-
-  
+  if (idx === -1) return res.status(400).send('Cliente no encontrado');
   clientes[idx] = req.body;
-  res.json(clientes[idx]);
+  res.redirect('/clientes/vista');
 });
 
-
- //Actualiza solo el campoq eus e envia
-
-router.patch('/:cedula', (req, res) => {
-  const { cedula } = req.params;
-  const idx = clientes.findIndex(c => c.cedula === cedula);
-
-  if (idx === -1) return res.status(400).json({ error: 'Cliente no encontrado' });
-
-  clientes[idx] = { ...clientes[idx], ...req.body };
-  res.json(clientes[idx]);
-});
-
-
- //Elimina el cliente indicado                  
-
+// Eliminar cliente
 router.delete('/:cedula', (req, res) => {
   const { cedula } = req.params;
-  const inicial = clientes.length;
   clientes = clientes.filter(c => c.cedula !== cedula);
-
-  if (clientes.length === inicial)
-    return res.status(400).json({ error: 'Cliente no encontrado' });
-
-  res.status(204).send();
+  res.redirect('/clientes/vista');
 });
 
 module.exports = router;

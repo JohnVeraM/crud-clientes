@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Editar Cliente</title></head>
+<link rel="stylesheet" href="/styles.css">
+<body>
+  <h1>Editar Cliente</h1>
+  <form method="POST" action="/clientes/<%= cliente.cedula %>?_method=PUT">
+     <input name="cedula" value="<%= cliente.cedula %>" required>
+    <input name="nombre" value="<%= cliente.nombre %>" required>
+    <input name="apellido" value="<%= cliente.apellido %>" required>
+    <input name="telefono" value="<%= cliente.telefono %>" required>
+    <select name="estado_civil" required>
+      <option value="Soltero" <%= cliente.estado_civil === 'Soltero' ? 'selected' : '' %>>Soltero</option>
+      <option value="Casado" <%= cliente.estado_civil === 'Casado' ? 'selected' : '' %>>Casado</option>
+      <option value="Divorciado" <%= cliente.estado_civil === 'Divorciado' ? 'selected' : '' %>>Divorciado</option>
+    </select>
+    <button>Actualizar</button>
+  </form>
+</body>
+</html>

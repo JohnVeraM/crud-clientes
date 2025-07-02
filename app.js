@@ -1,11 +1,23 @@
 const express = require('express');
-const app = express();
+const path = require('path');
+const methodOverride = require('method-override');
 const clientesRoutes = require('./routes/clientes');
 
-app.use(express.json());
-app.use('/api/clientes', clientesRoutes);
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Servidor ejecutándose en el puerto ${port}`);
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(express.static('public'));
+
+app.use('/clientes', clientesRoutes);
+
+app.get('/', (req, res) => {
+  res.redirect('/clientes/vista');
 });
+
+app.listen(3000, () => {
+  console.log('Servidor corriendo en http://localhost:3000');
+});
+
