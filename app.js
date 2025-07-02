@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
 const clientesRoutes = require('./routes/clientes');
-
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -17,7 +16,8 @@ app.get('/', (req, res) => {
   res.redirect('/clientes/vista');
 });
 
-app.listen(3000, () => {
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
-
